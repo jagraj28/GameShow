@@ -5,6 +5,11 @@ import csv
 
 operators = {"+":operator.add, "-":operator.sub, "*":operator.mul}
 
+class1 = {}
+class2 = {}    
+class3 = {}
+averages = {}
+
 # Introduction
 def Introduction():
     print("Welcome to the quiz!")
@@ -71,5 +76,45 @@ def Quiz():
     print("Thanks for completing the quiz!", "Your score is", score, "!")
     return(score)
 
-Introduction()
-Quiz()
+# Saving Names and Scores
+def Scores():
+    userName, className = Introduction() 
+    score = Quiz()
+
+    if className == "1":
+        class1.setdefault(userName, [])
+        class1[userName].append(score)
+        for key in class1:
+            averages[key] = sum(class1[key]) / len(class1[key])
+    else:
+        print("Sorry, class is not valid, scores not saved!")
+    
+    return(userName, className, score)
+
+# Writing Info to Excel File
+def File():
+    userName, className, score = Scores()
+    while True:
+        try:
+            endProgram = input("Do you wish to exit the quiz? Y or N: ")
+            break
+        except ValueError:
+            endProgram = input("Enter a valid answer: ")
+            break
+    
+    # Writing to file
+    if endProgram == "Y" and className == "1":
+        with open("Class 1 Scores.csv", "a+") as f:
+            FileWriter = csv.writer(f)
+            FileWriter.writerows(class1.items())
+        with open("Class 1 Scores.csv", "a+") as f:
+            FileWriter = csv.writer(f)
+            FileWriter.writerows(averages.items())
+        print("You can now exit the quiz, have a great day!")
+    elif endProgram == "N":
+        print("Good luck!\n")
+        File()
+    else:
+        print("Error, file not created!")
+
+File()

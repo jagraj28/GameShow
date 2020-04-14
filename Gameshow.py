@@ -68,7 +68,7 @@ def Quiz():
             print("Incorrect!")
     
     # Inform user of their score
-    print("Your score is ", score, "! Well done!")
+    print("Thanks for completing the quiz!", "Your score is", score, "!")
     return(score)
 
 Introduction()

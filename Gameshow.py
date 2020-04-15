@@ -23,18 +23,16 @@ def Introduction():
                 validName = True
         except ValueError:
             print("Ah come on, that's not a name! Try again!")
-            continue
 
     # User's Class
     validClass = False
     while validClass == False:
         try:
-            className = str(input("What class are you in?: "))
+            className = str(input("What class are you in; 1, 2 or 3?: "))
             if userName.isalpha():
                 validClass = True
         except ValueError:
             print("Erm, that's not a real class! Try again!")
-            continue
 
     # Message to start the quiz
     print("Great! The quiz will now begin, good luck!")
@@ -78,14 +76,25 @@ def Quiz():
 
 # Saving Names and Scores
 def Scores():
+
+    # Run Intro and Quiz functions
     userName, className = Introduction() 
     score = Quiz()
 
+    # Saving Name and Score to dictionary
     if className == "1":
         class1.setdefault(userName, [])
         class1[userName].append(score)
-        for key in class1:
-            averages[key] = sum(class1[key]) / len(class1[key])
+    else:
+        print("Sorry, class is not valid, scores not saved!")
+    if className == "2":
+        class2.setdefault(userName, [])
+        class2[userName].append(score)
+    else:
+        print("Sorry, class is not valid, scores not saved!")
+    if className == "3":
+        class3.setdefault(userName, [])
+        class3[userName].append(score)
     else:
         print("Sorry, class is not valid, scores not saved!")
     
@@ -93,7 +102,11 @@ def Scores():
 
 # Writing Info to Excel File
 def File():
+
+    # Run Intro, Quiz and Scores functions
     userName, className, score = Scores()
+
+    # Check if user wishes to re-try quiz
     while True:
         try:
             endProgram = input("Do you wish to exit the quiz? Y or N: ")
@@ -107,9 +120,26 @@ def File():
         with open("Class 1 Scores.csv", "a+") as f:
             FileWriter = csv.writer(f)
             FileWriter.writerows(class1.items())
-        with open("Class 1 Scores.csv", "a+") as f:
+        print("You can now exit the quiz, have a great day!")
+    elif endProgram == "N":
+        print("Good luck!\n")
+        File()
+    else:
+        print("Error, file not created!")
+    if endProgram == "Y" and className == "2":
+        with open("Class 2 Scores.csv", "a+") as f:
             FileWriter = csv.writer(f)
-            FileWriter.writerows(averages.items())
+            FileWriter.writerows(class2.items())
+        print("You can now exit the quiz, have a great day!")
+    elif endProgram == "N":
+        print("Good luck!\n")
+        File()
+    else:
+        print("Error, file not created!")
+    if endProgram == "Y" and className == "3":
+        with open("Class 3 Scores.csv", "a+") as f:
+            FileWriter = csv.writer(f)
+            FileWriter.writerows(class3.items())
         print("You can now exit the quiz, have a great day!")
     elif endProgram == "N":
         print("Good luck!\n")
@@ -117,4 +147,51 @@ def File():
     else:
         print("Error, file not created!")
 
-File()
+def Teacher():
+
+    # Check if user is teacher or student
+    try:
+        is_teacher = input("Are you a teacher or student? Reply with S or T: ")
+    except ValueError:
+        is_teacher = input("Enter a valid answer: ")
+
+    # Run Quiz if not teacher
+    if is_teacher == "S":
+        File()
+
+    # Ask if teacher wishes to see scores
+    try:
+        CheckScores = input("Do you wish to check class scores? Y or N: ")
+    except ValueError:
+        CheckScores = input("Enter a valid answer: ")
+
+    # Open CSV files and print names and scores dependent on class
+    if is_teacher == "T" and CheckScores == "Y":
+        try:
+            which_class = input("Which class scores would you like to view: ")
+        except ValueError:
+            which_class = input("Enter a valid answer: ")
+        if which_class == "1":
+                with open(r"Class 1 Scores.csv") as f:
+                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    print("In Alphabetical Order:")
+                    for row in reader:
+                        print(row)
+        if which_class == "2":
+                with open(r"Class 2 Scores.csv") as f:
+                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    print("In Alphabetical Order:")
+                    for row in reader:
+                        print(row)
+        if which_class == "3":
+                with open(r"Class 3 Scores.csv") as f:
+                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    print("In Alphabetical Order:")
+                    for row in reader:
+                        print(row)
+    
+    # Stop the program if teacher doesn't wish to see scores.
+    elif CheckScores == "N":
+        print("You have exited the program.")
+
+Teacher()

@@ -147,6 +147,7 @@ def File():
     else:
         print("Error, file not created!")
 
+# Student or Teacher function
 def Teacher():
 
     # Check if user is teacher or student

@@ -15,22 +15,24 @@ def Introduction():
     print("Welcome to the quiz!")
 
     # User's Name
-    validName = False
-    while validName == False:
+    while True:
         try:
-            userName = str(input("What's your name?: "))
+            userName = input("What's your name?: ")
             if userName.isalpha():
-                validName = True
+                break
+            else:
+                print("Ah come on, that's not a name! Try again!")
         except ValueError:
             print("Ah come on, that's not a name! Try again!")
 
     # User's Class
-    validClass = False
-    while validClass == False:
+    while True:
         try:
-            className = str(input("What class are you in; 1, 2 or 3?: "))
-            if userName.isalpha():
-                validClass = True
+            className = int(input("What class are you in; 1, 2 or 3?: "))
+            if className == "1" or "2" or "3":
+                break
+            else:
+                print("Erm, that's not a real class! Try again!")
         except ValueError:
             print("Erm, that's not a real class! Try again!")
 
@@ -122,7 +124,7 @@ def File():
             FileWriter.writerows(class1.items())
         print("You can now exit the quiz, have a great day!")
     elif endProgram == "N":
-        print("Good luck!\n")
+        print("Good luck!")
         File()
     else:
         print("Error, file not created!")
@@ -132,7 +134,7 @@ def File():
             FileWriter.writerows(class2.items())
         print("You can now exit the quiz, have a great day!")
     elif endProgram == "N":
-        print("Good luck!\n")
+        print("Good luck!")
         File()
     else:
         print("Error, file not created!")
@@ -142,7 +144,7 @@ def File():
             FileWriter.writerows(class3.items())
         print("You can now exit the quiz, have a great day!")
     elif endProgram == "N":
-        print("Good luck!\n")
+        print("Good luck!")
         File()
     else:
         print("Error, file not created!")
@@ -169,24 +171,24 @@ def Teacher():
     # Open CSV files and print names and scores dependent on class
     if is_teacher == "T" and CheckScores == "Y":
         try:
-            which_class = input("Which class scores would you like to view: ")
+            which_class = int(input("Which class scores would you like to view: "))
         except ValueError:
             which_class = input("Enter a valid answer: ")
         if which_class == "1":
                 with open(r"Class 1 Scores.csv") as f:
-                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    reader = csv.reader(f, delimiter=' ', quotechar='|')
                     print("In Alphabetical Order:")
                     for row in reader:
                         print(row)
         if which_class == "2":
                 with open(r"Class 2 Scores.csv") as f:
-                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    reader = csv.reader(f, delimiter=' ', quotechar='|')
                     print("In Alphabetical Order:")
                     for row in reader:
                         print(row)
         if which_class == "3":
                 with open(r"Class 3 Scores.csv") as f:
-                    reader = csv.reader(f, delimiter=',', quotechar='|')
+                    reader = csv.reader(f, delimiter=' ', quotechar='|')
                     print("In Alphabetical Order:")
                     for row in reader:
                         print(row)

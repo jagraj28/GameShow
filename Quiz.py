@@ -3,7 +3,6 @@ import operator
 
 operators = {"+":operator.add, "-":operator.sub, "*":operator.mul}
 
-# Quiz
 def Quiz():
     questionNumber = 0
     score = 0
@@ -22,10 +21,10 @@ def Quiz():
         # Ensure user input is valid
         while True:
             try:
-                userAns = float(input("Enter your answer: "))
+                userAns = int(input("Enter your answer: "))
                 break
             except ValueError:
-                userAns = float(input("Enter a valid answer: "))
+                userAns = int(input("Enter a valid answer: "))
                 break
         
         # Check user answer is correct

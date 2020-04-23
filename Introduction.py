@@ -1,11 +1,11 @@
-# Introduction
+
 def Introduction():
     print("Welcome to the quiz!")
 
     # User's Name
     while True:
         try:
-            userName = input("What's your name?: ")
+            userName = input("What's your name? ")
             if userName.isalpha():
                 break
             else:
@@ -16,8 +16,8 @@ def Introduction():
     # User's Class
     while True:
         try:
-            className = int(input("What class are you in; 1, 2 or 3?: "))
-            if className == "1" or "2" or "3":
+            className = str(input("What class are you in? "))
+            if className.isnumeric():
                 break
             else:
                 print("Erm, that's not a real class! Try again!")
